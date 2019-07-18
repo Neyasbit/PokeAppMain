@@ -7,20 +7,32 @@ import android.net.NetworkInfo;
 
 public class MyApplication extends Application {
 
-    private static MyApplication INSTANCE = null;
+    private static MyApplication INSTANCE;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        if (INSTANCE == null) {
+            INSTANCE = this;
+        }
+    }
 
     public static MyApplication getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new MyApplication();
-
-        }
         return INSTANCE;
     }
 
-    /*public static boolean hasNetwork() {
+    public static boolean hasNetwork() {
+        return INSTANCE.isNetworkConnected();
+    }
+
+    private boolean isNetworkConnected() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }*/
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
 }
