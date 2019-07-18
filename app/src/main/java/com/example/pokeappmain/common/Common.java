@@ -1,11 +1,6 @@
-package com.example.pokeappmain.Common;
+package com.example.pokeappmain.common;
 
 import android.graphics.Color;
-
-import com.example.pokeappmain.model.PokemonDetail;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Common {
 
