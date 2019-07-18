@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.pokeappmain.MyApplication;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +29,10 @@ public class PokeClient {
 
     private static OkHttpClient buildClient() {
         return new OkHttpClient.Builder()
+                .cache(cache())
+                .addInterceptor(httpLoggingInterceptor())
+                .addNetworkInterceptor(networkInterceptor())
+                .addInterceptor(offlineInterceptor())
                 .build();
     }
 
@@ -37,20 +43,20 @@ public class PokeClient {
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build();
     }
-    /*private static final long cacheSize = 5 * 1024 * 1024; // 5 MB
 
-    private static Cache cache(){
-        return new Cache(new File(MyApplication.getInstance().getCacheDir(),"someIdentifier"), cacheSize);
+    private static final long cacheSize = 5 * 1024 * 1024; // 5 MB
+
+    private static Cache cache() {
+        return new Cache(new File(MyApplication.getInstance().getCacheDir(), "someIdentifier"), cacheSize);
     }
 
     private static Interceptor offlineInterceptor() {
         return new Interceptor() {
+            @NotNull
             @Override
-            public Response intercept(Chain chain) throws IOException {
-                Log.d(TAG, "offline interceptor: called.");
+            public Response intercept(@NotNull Chain chain) throws IOException {
+                Log.d(TAG, "offline interceptor: called:");
                 Request request = chain.request();
-
-                // prevent caching when network is on. For that we use the "networkInterceptor"
 
                 if (!MyApplication.hasNetwork()) {
                     CacheControl cacheControl = new CacheControl.Builder()
@@ -63,7 +69,6 @@ public class PokeClient {
                             .cacheControl(cacheControl)
                             .build();
                 }
-
                 return chain.proceed(request);
             }
         };
@@ -71,9 +76,10 @@ public class PokeClient {
 
     private static Interceptor networkInterceptor() {
         return new Interceptor() {
+            @NotNull
             @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Log.d(TAG, "network interceptor: called.");
+            public Response intercept(@NotNull Chain chain) throws IOException {
+                Log.d(TAG, "network interceptor: called");
 
                 Response response = chain.proceed(chain.request());
 
@@ -90,18 +96,15 @@ public class PokeClient {
         };
     }
 
-    private static HttpLoggingInterceptor httpLoggingInterceptor ()
-    {
+    private static HttpLoggingInterceptor httpLoggingInterceptor() {
         HttpLoggingInterceptor httpLoggingInterceptor =
-                new HttpLoggingInterceptor( new HttpLoggingInterceptor.Logger()
-                {
+                new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                     @Override
-                    public void log (String message)
-                    {
+                    public void log(@NotNull String message) {
                         Log.d(TAG, "log: http log: " + message);
                     }
-                } );
-        httpLoggingInterceptor.setLevel( HttpLoggingInterceptor.Level.BODY);
+                });
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return httpLoggingInterceptor;
-    }*/
+    }
 }
