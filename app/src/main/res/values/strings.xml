@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PokeAppMain</string>
+    <string name="stats">Stats</string>
+    <string name="type_for_tv">Type</string>
+    <string name="weight_for_tv">Weight</string>
+    <string name="height_for_tv">Height</string>
 </resources>
