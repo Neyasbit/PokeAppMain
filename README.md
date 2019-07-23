@@ -1,4 +1,4 @@
-# PokeApp for Sibers
+# PokeApp 
 
 This is a client server application for testing for the Android operating system.
 
