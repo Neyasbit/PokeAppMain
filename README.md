@@ -22,4 +22,6 @@ This is a client server application for testing for the Android operating system
 ![](gif/load_more.gif)
 ---
 - *In case of pressing the button on the main screen, the list of Pokémon will be reinitialized with the start on an arbitrary item from the Pokémon database on the server.*
+---
 ![](gif/random.gif)
+---
